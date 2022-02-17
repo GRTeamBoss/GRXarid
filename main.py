@@ -17,9 +17,10 @@ def bot_command(message):
 
 @bot.message_handler(func=lambda message: parse(message) is True)
 def parse_command(message):
-    parse_id(message)
-
-
+    if message.text.split()[0] == '/uzex':
+        parse_uzex(message)
+    elif message.text.split()[0] == '/product':
+        parse_id(message)
 
 
 if __name__ == "__main__":
