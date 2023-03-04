@@ -4,18 +4,21 @@
 from core.telegram import *
 from core.token import bot
 from core.filter import *
+from logger import Logger
+
+Logger()
 
 
-@bot.message_handler(func=lambda message: user_command(message) is True)
+@bot.message_handler(commands=['start', 'help'])
 def bot_command(message):
     funcs = {
         "/start": start,
         "/help": usage,
     }
-    funcs[message.text.split(" ")[0]](message)
+    funcs[message.text](message)
 
 
-@bot.message_handler(func=lambda message: parse(message) is True)
+@bot.message_handler(func=lambda message: parse_method(message) is True)
 def parse_command(message):
     if message.text.split()[0] == '/uzex':
         parse_uzex(message)

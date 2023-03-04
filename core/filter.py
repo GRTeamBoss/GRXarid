@@ -1,20 +1,7 @@
 import sqlite3
 
-from core.token import bot
 
-
-def user_command(message) -> bool:
-    _commands = (
-        "/start",
-        "/help",
-    )
-    if message.text.split()[0] in _commands:
-        return True
-    else:
-        return False
-
-
-def parse(message) -> bool:
+def parse_method(message) -> bool:
     __command = message.text.split()[0]
     __range = int(message.text.rstrip().split()[2])
     if __command == "/product" or __command == "/uzex":
@@ -26,11 +13,9 @@ def parse(message) -> bool:
         return False
 
 
-def user(message) -> bool:
+def is_user(message) -> bool:
     db = sqlite3.connect("bot.db")
-    user_info = list(db.cursor().execute(
-        f"select * from User where ID={message.chat.id}"
-    ))
+    user_info = list(db.execute(f"select * from User where ID={message.chat.id}"))
     db.close()
     if user_info:
         return True
