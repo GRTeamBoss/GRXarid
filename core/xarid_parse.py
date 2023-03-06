@@ -58,7 +58,6 @@ class Xarid:
             self.__ID = num   
             response = requests.post("https://api.xt-xarid.uz/urpc", headers=self.__HEADER, json=__params)
             if response.status_code == 200:
-                print(f"[*] {self.id} parsed!")
                 json = response.json()
                 if json["result"]["status"] == "open" and json["result"]["type"] == "request":
                     __data = []
@@ -81,8 +80,10 @@ class Xarid:
                     excel_row += 1
                 else:
                     self.logger.info(f"[ID = {self.__ID}] [status = {json['result']['status']}]")
+                    bot.send_message(self.message.chat.id, f'[#] ID = {self.__ID} didn\'t parsed')
             else:
                 self.logger.info(f"[ID = {self.__ID}] [status = {response.status_code}]")
+                bot.send_message(self.message.chat.id, '[#] API didn\'t parsed!')
 
     def __create_excel_file(self):
         wb = openpyxl.Workbook()

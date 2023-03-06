@@ -1,12 +1,11 @@
 import sqlite3
 
-import openpyxl
 from telebot.types import *
 
 from core.token import bot
 from core.filter import *
 from core.xarid_parse import Xarid
-from core.xarid_uzex_parse import parse
+from core.xarid_uzex_parse import XaridUzex
 
 
 def start(message):
@@ -18,7 +17,7 @@ parse `https://api.xt-xarid.uz/urpc`
 ---
 please press to >> /help << for more info!
     """
-    if user(message) is False:
+    if is_user(message) is False:
         db = sqlite3.connect("bot.db")
         db.execute(
             f"insert into User (ID, Username, Name, Last_Name) values ({message.chat.id}, '{message.chat.username}', '{message.chat.first_name}', '{message.chat.last_name}')"
@@ -49,5 +48,5 @@ def parse_id(message):
 
 
 def parse_uzex(message) -> None:
-    parse(message, message.text.split()[1], message.text.split()[2])
+    XaridUzex(message, message.text.split()[1], message.text.split()[2])
 

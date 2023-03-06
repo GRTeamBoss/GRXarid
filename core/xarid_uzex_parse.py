@@ -45,7 +45,6 @@ class XaridUzex:
         excel_row = 1
         self.__create_excel()
         for num in range(int(self.start), int(self.end)+int(self.start)+1):
-            print("id:", num)            
             time.sleep(1)
             resp = requests.get(f"https://xarid-api-shop.uzex.uz/Common/GetLot/{num}", headers=self.__HEADER)
             if resp.status_code == 200:
@@ -60,7 +59,7 @@ class XaridUzex:
         file = f"./Files/{self.message.chat.id}_uzex_{self.message.date}.xlsx"
         if pathlib.Path(file).exists():
             data = pathlib.Path(file).read_bytes()
-            bot.send_document(chat_id=self.message.chat.id, data=data, visible_file_name=f"uzex_{self.start}_{int(self.start)+int(self.end)}.xlsx")
+            bot.send_document(chat_id=self.message.chat.id, data=data, visible_file_name=f"uzex_{self.start}_{int(self.start)+int(self.end)}.xlsx", caption="@gr_team_xarid_bot")
         else:
             bot.send_message(self.message.chat.id, f"[#] All positions didn't parsed!")
 
