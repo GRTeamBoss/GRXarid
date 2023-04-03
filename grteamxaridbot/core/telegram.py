@@ -1,14 +1,11 @@
 import sqlite3
 
-from telebot.types import *
+from grteamxaridbot.core.token import bot
+from grteamxaridbot.core.filter import *
+from grteamxaridbot.core.xarid_parse import Xarid
+from grteamxaridbot.core.xarid_uzex_parse import XaridUzex
 
-from core.token import bot
-from core.filter import *
-from core.xarid_parse import Xarid
-from core.xarid_uzex_parse import XaridUzex
-
-
-async def start(message):
+def start(message):
     intro = """
 Hello, I am `GRXarid` bot!
 My tasks:
@@ -24,10 +21,10 @@ please press to >> /help << for more info!
         )
         db.commit()
         db.close()
-    await bot.send_message(message.chat.id, intro)
+    bot.send_message(message.chat.id, intro)
 
 
-async def usage(message):
+def usage(message):
     info = """
 _commands_:
 /start
@@ -40,13 +37,16 @@ _examples_:
 second parameter > 200:
 this should be more `10` and less `10000`
     """
-    await bot.send_message(message.chat.id, info)
+    print(info)
+    bot.send_message(message.chat.id, info)
 
 
-async def parse_id(message):
-    await Xarid(message, message.text.split()[1], message.text.split(2))
+def parse_id(message):
+    bot.send_message(message.chat.id, "[#] Xarid")
+    Xarid(message, message.text.split()[1], message.text.split(2))
 
 
-async def parse_uzex(message) -> None:
-    await XaridUzex(message, message.text.split()[1], message.text.split()[2])
+def parse_uzex(message):
+    bot.send_message(message.chat.id, "[#] XaridUzex")
+    XaridUzex(message, message.text.split()[1], message.text.split()[2])
 

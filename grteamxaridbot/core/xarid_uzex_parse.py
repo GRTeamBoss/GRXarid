@@ -1,9 +1,8 @@
-import time, requests, openpyxl, typing, telebot, core, pathlib
+import time, requests, openpyxl, pathlib
 
 from grteamxaridbot.logger import log
-from typing import Union
 from telebot.types import Message
-from core.token import bot
+from grteamxaridbot.core.token import bot
 
 
 class XaridUzex:
@@ -31,17 +30,17 @@ class XaridUzex:
         'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36',
     }
 
-    async def __init__(self, message: Message, start: int, end: int):
+    def __init__(self, message: Message, start: int, end: int):
         self.message = message
         self.start = int(start)
         self.end = int(end)
         self.logger = log
-        await self.__parse()
+        self.__parse()
         data = pathlib.Path(f"./Files/{message.chat.id}_uzex_{message.date}.xlsx").read_bytes()
-        await bot.send_document(self.message.chat.id, data=data, visible_file_name=f"xt_uzex_{self.start}_{self.start+self.end}.xlsx", caption="@gr_team_xarid_bot")
+        bot.send_document(self.message.chat.id, document=data, visible_file_name=f"xt_uzex_{self.start}_{self.start+self.end}.xlsx", caption="@gr_team_xarid_bot")
 
 
-    async def __parse(self):
+    def __parse(self):
         excel_row = 1
         self.__create_excel()
         for num in range(int(self.start), int(self.end)+int(self.start)+1):
@@ -49,7 +48,7 @@ class XaridUzex:
             resp = requests.get(f"https://xarid-api-shop.uzex.uz/Common/GetLot/{num}", headers=self.__HEADER)
             if resp.status_code == 200:
                 values = resp.json()
-                parse_bot = self.__parse_values(values, method='bot')
+                parse_bot = str(self.__parse_values(values, method='bot'))
                 parse_excel = self.__parse_values(values, method='excel')
                 bot.send_message(self.message.chat.id, parse_bot)
                 self.__write_to_excel(parse_excel, excel_row)
@@ -59,13 +58,13 @@ class XaridUzex:
         file = f"./Files/{self.message.chat.id}_uzex_{self.message.date}.xlsx"
         if pathlib.Path(file).exists():
             data = pathlib.Path(file).read_bytes()
-            await bot.send_document(chat_id=self.message.chat.id, data=data, visible_file_name=f"uzex_{self.start}_{int(self.start)+int(self.end)}.xlsx", caption="@gr_team_xarid_bot")
+            bot.send_document(chat_id=self.message.chat.id, document=data, visible_file_name=f"uzex_{self.start}_{int(self.start)+int(self.end)}.xlsx", caption="@gr_team_xarid_bot")
         else:
-            await bot.send_message(self.message.chat.id, f"[#] All positions didn't parsed!")
+            bot.send_message(self.message.chat.id, f"[#] All positions didn't parsed!")
 
 
 
-    def __parse_values(self, data, method: str) -> Union[str, list]:
+    def __parse_values(self, data, method: str):
         if method == "bot":
             value = ""
             value += f"[*] Категория: {data['category_name']}\n"
@@ -85,6 +84,7 @@ class XaridUzex:
             value += f"[*] Дата производства: {data['start_date']}\n"
             value += f"[*] Статус продукта: {data['status_name']}\n"
             value += f"[*] Ссылка: https://xarid.uzex.uz/shop/lot-details/{data['lot_display_no'][-5:]}"
+            return value
         elif method == "excel":
             value = []
             value.append(data['category_name'])
@@ -113,10 +113,10 @@ class XaridUzex:
             value.append(data['start_date'])
             value.append(data['status_name'])
             value.append("https://xarid.uzex.uz/shop/lot-details/{data['lot_display_no'][-5:]}")
-        return value
+            return value
 
 
-    def __create_excel(self, message: Message) -> None:
+    def __create_excel(self) -> None:
         wb = openpyxl.Workbook()
         sheet = wb.active
         __values = (
@@ -150,7 +150,7 @@ class XaridUzex:
         )
         for num in range(0, len(__values)):
             sheet.cell(row=1, column=num+1).value = __values[num]
-        wb.save(filename=f"./Files/{message.chat.id}_uzex_{message.date}.xlsx")
+        wb.save(filename=f"./Files/{self.message.chat.id}_uzex_{self.message.date}.xlsx")
 
 
     def __write_to_excel(self, data, excel_row) -> None:

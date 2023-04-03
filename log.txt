@@ -1,18 +1,15 @@
-2023-03-07 02:30:22,727 - TeleBot - ERROR - Unhandled exception (full traceback for debug level): A request to the Telegram API was unsuccessful. Error code: 409. Description: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
-2023-03-07 02:30:26,426 - TeleBot - ERROR - Unhandled exception (full traceback for debug level): A request to the Telegram API was unsuccessful. Error code: 409. Description: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
-2023-03-07 02:30:30,615 - TeleBot - ERROR - Unhandled exception (full traceback for debug level): A request to the Telegram API was unsuccessful. Error code: 409. Description: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
-2023-03-07 02:30:35,802 - TeleBot - ERROR - Unhandled exception (full traceback for debug level): A request to the Telegram API was unsuccessful. Error code: 409. Description: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
-2023-03-07 02:34:29,837 - TeleBot - ERROR - Unhandled exception (full traceback for debug level): A request to the Telegram API was unsuccessful. Error code: 409. Description: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
-2023-03-07 02:34:33,532 - TeleBot - ERROR - Unhandled exception (full traceback for debug level): A request to the Telegram API was unsuccessful. Error code: 409. Description: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
-2023-03-07 02:34:37,722 - TeleBot - ERROR - Unhandled exception (full traceback for debug level): A request to the Telegram API was unsuccessful. Error code: 409. Description: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
-2023-03-07 02:34:42,909 - TeleBot - ERROR - Unhandled exception (full traceback for debug level): A request to the Telegram API was unsuccessful. Error code: 409. Description: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
-2023-03-07 02:34:47,095 - TeleBot - ERROR - Unhandled exception (full traceback for debug level): A request to the Telegram API was unsuccessful. Error code: 409. Description: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
-2023-03-07 02:35:46,990 - TeleBot - ERROR - Unhandled exception (full traceback for debug level): A request to the Telegram API was unsuccessful. Error code: 409. Description: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
-2023-03-07 02:35:50,679 - TeleBot - ERROR - Unhandled exception (full traceback for debug level): A request to the Telegram API was unsuccessful. Error code: 409. Description: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
-2023-03-07 02:35:54,861 - TeleBot - ERROR - Unhandled exception (full traceback for debug level): A request to the Telegram API was unsuccessful. Error code: 409. Description: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
-2023-03-07 02:36:00,049 - TeleBot - ERROR - Unhandled exception (full traceback for debug level): A request to the Telegram API was unsuccessful. Error code: 409. Description: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
-2023-03-07 02:36:00,906 - TeleBot - ERROR - Infinity polling: polling exited
-2023-03-07 02:36:00,906 - TeleBot - ERROR - Break infinity polling
-2023-03-07 02:37:05,031 - TeleBot - ERROR - Unhandled exception (full traceback for debug level): A request to the Telegram API was unsuccessful. Error code: 409. Description: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
-2023-03-07 02:37:06,003 - TeleBot - ERROR - Infinity polling: polling exited
-2023-03-07 02:37:06,003 - TeleBot - ERROR - Break infinity polling
+2023-04-03 21:15:34,331 - asyncio - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7f0c436e6b30>
+2023-04-03 21:15:34,332 - asyncio - ERROR - Unclosed connector
+connections: ['[(<aiohttp.client_proto.ResponseHandler object at 0x7f0c436e1660>, 13962.130744775)]']
+connector: <aiohttp.connector.TCPConnector object at 0x7f0c436e6aa0>
+2023-04-03 21:20:56,615 - asyncio - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7f96d75eeb00>
+2023-04-03 21:20:56,616 - asyncio - ERROR - Unclosed connector
+connections: ['[(<aiohttp.client_proto.ResponseHandler object at 0x7f96d75e9600>, 14284.391995933)]']
+connector: <aiohttp.connector.TCPConnector object at 0x7f96d75eea70>
+2023-04-03 21:27:10,780 - asyncio - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7fcaf164eb00>
+2023-04-03 21:27:10,780 - asyncio - ERROR - Unclosed connector
+connections: ['[(<aiohttp.client_proto.ResponseHandler object at 0x7fcaf1649600>, 14658.57123342)]']
+connector: <aiohttp.connector.TCPConnector object at 0x7fcaf164ea70>

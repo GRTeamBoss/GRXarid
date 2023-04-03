@@ -3,27 +3,30 @@
 
 import asyncio
 
-from core.telegram import *
-from core.token import bot
-from core.filter import *
+from grteamxaridbot.core.telegram import *
+from grteamxaridbot.core.token import bot
+from grteamxaridbot.core.filter import *
 
 
 @bot.message_handler(commands=['start', 'help'])
 async def bot_command(message):
+    print(message.text)
     funcs = {
         "/start": start,
         "/help": usage,
     }
-    await funcs[message.text](message)
+    funcs[message.text](message)
 
 
 @bot.message_handler(func=lambda message: parse_method(message) is True)
 async def parse_command(message):
     if message.text.split()[0] == '/uzex':
-        await parse_uzex(message)
+        parse_uzex(message)
     elif message.text.split()[0] == '/product':
-        await parse_id(message)
+        parse_id(message)
 
 
 if __name__ == "__main__":
-    asyncio.run(bot.infinity_polling())
+    print("[*] START")
+    asyncio.run(bot.polling(non_stop=True, interval=0))
+    print("[*] END")

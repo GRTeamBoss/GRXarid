@@ -1,9 +1,8 @@
-import re, requests, openpyxl, pathlib, typing, telebot, core
+import re, requests, openpyxl, pathlib
 
 from grteamxaridbot.logger import log
-from typing import Union
 from telebot.types import Message
-from core.token import bot
+from grteamxaridbot.core.token import bot
 
 
 class Xarid:
@@ -34,16 +33,16 @@ class Xarid:
         "TE": "trailers",
     }
 
-    async def __init__(self, message: Message, start: Union[str, int], end: Union[str, int]):
+    def __init__(self, message: Message, start: str | int, end: str | int):
         self.message = message
         self.start = int(start)
         self.end = int(end)
         self.logger = log
-        await self.__parse()
+        self.__parse()
         data = pathlib.Path(f'./Files/{self.message.chat.id}_{self.message.date}.xlsx').read_bytes()
-        await bot.send_document(message.chat.id, data=data, visible_file_name=f"xt_{self.start}_{self.start+self.end}.xlsx", caption="@gr_team_xarid_bot")
+        bot.send_document(message.chat.id, document=data, visible_file_name=f"xt_{self.start}_{self.start+self.end}.xlsx", caption="@gr_team_xarid_bot")
 
-    async def __parse(self):
+    def __parse(self):
         self.__create_excel_file()
         excel_row = 2
         __params = {
@@ -55,7 +54,7 @@ class Xarid:
             }
         }
         for num in range(self.start, self.end+self.start+1):
-            self.__ID = num   
+            self.__ID = num
             response = requests.post("https://api.xt-xarid.uz/urpc", headers=self.__HEADER, json=__params)
             if response.status_code == 200:
                 json = response.json()
@@ -75,15 +74,15 @@ class Xarid:
                     __data.append(__regions_value)
                     __data.append(f"https://xt-xarid.uz/procedure/{json['result']['proc_id']}/core")
                     value = f"ID:\r\t{__data[0]}\nИмя товара:\r\t{__data[1]}\nСтрана:\r\t{__data[3]}\nСрок торга:\r\t{__data[4]}\nЦена:\r\t{__data[5]}\nКоличество:\r\t{__data[6]}\nРайоны:\r\t{__data[7]}\nСсылка:\r\t{__data[8]}"
-                    bot.send_message(self.message.chat.id, value) 
-                    self.__write_to_excel(self.message, __data, excel_row)
+                    bot.send_message(self.message.chat.id, value)
+                    self.__write_to_excel(__data, excel_row)
                     excel_row += 1
                 else:
                     self.logger.info(f"[ID = {self.__ID}] [status = {json['result']['status']}]")
-                    await bot.send_message(self.message.chat.id, f'[#] ID = {self.__ID} didn\'t parsed')
+                    bot.send_message(self.message.chat.id, f'[#] ID = {self.__ID} didn\'t parsed')
             else:
                 self.logger.info(f"[ID = {self.__ID}] [status = {response.status_code}]")
-                await bot.send_message(self.message.chat.id, '[#] API didn\'t parsed!')
+                bot.send_message(self.message.chat.id, '[#] API didn\'t parsed!')
 
     def __create_excel_file(self):
         wb = openpyxl.Workbook()
