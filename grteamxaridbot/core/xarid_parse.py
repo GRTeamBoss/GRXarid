@@ -40,7 +40,7 @@ class Xarid:
         self.logger = log
         self.__parse()
         data = pathlib.Path(f'./Files/{self.message.chat.id}_{self.message.date}.xlsx').read_bytes()
-        bot.send_document(message.chat.id, data, caption="@gr_team_xarid_bot")
+        bot.send_document(message.chat.id, data, visible_file_name=f'{self.message.chat.id}_{self.start+(self.end-self.start)}.xlsx', caption="@gr_team_xarid_bot\n#document #Xarid")
 
     def __parse(self):
         self.__create_excel_file()

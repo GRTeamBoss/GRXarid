@@ -37,7 +37,7 @@ class XaridUzex:
         self.logger = log
         self.__parse()
         data = pathlib.Path(f"./Files/{self.message.chat.id}_uzex_{self.message.date}.xlsx").read_bytes()
-        bot.send_document(self.message.chat.id, data, caption="@gr_team_xarid_bot")
+        bot.send_document(self.message.chat.id, data, visible_file_name=f'{self.message.chat.id}_uzex_{self.start+(self.end-self.start)}.xlsx', caption="@gr_team_xarid_bot\n#document #XaridUzex")
 
 
     def __parse(self):
@@ -58,7 +58,7 @@ class XaridUzex:
         file = f"./Files/{self.message.chat.id}_uzex_{self.message.date}.xlsx"
         if pathlib.Path(file).exists():
             data = pathlib.Path(file).read_bytes()
-            bot.send_document(chat_id=self.message.chat.id, document=data, caption="@gr_team_xarid_bot")
+            bot.send_document(self.message.chat.id, data, visible_file_name=f'{self.message.chat.id}_uzex_{self.start+(self.end-self.start)}.xlsx', caption="@gr_team_xarid_bot\n#document #XaridUzex")
         else:
             bot.send_message(self.message.chat.id, f"[#] All positions didn't parsed!")
 
