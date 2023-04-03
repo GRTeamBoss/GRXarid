@@ -33,14 +33,14 @@ class Xarid:
         "TE": "trailers",
     }
 
-    def __init__(self, message: Message, start: str | int, end: str | int):
+    def __init__(self, message: Message, start: str, end: str):
         self.message = message
         self.start = int(start)
         self.end = int(end)
         self.logger = log
         self.__parse()
         data = pathlib.Path(f'./Files/{self.message.chat.id}_{self.message.date}.xlsx').read_bytes()
-        bot.send_document(message.chat.id, document=data, visible_file_name=f"xt_{self.start}_{self.start+self.end}.xlsx", caption="@gr_team_xarid_bot")
+        bot.send_document(message.chat.id, data, caption="@gr_team_xarid_bot")
 
     def __parse(self):
         self.__create_excel_file()

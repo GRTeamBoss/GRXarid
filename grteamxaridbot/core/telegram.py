@@ -43,7 +43,7 @@ this should be more `10` and less `10000`
 
 def parse_id(message):
     bot.send_message(message.chat.id, "[#] Xarid")
-    Xarid(message, message.text.split()[1], message.text.split(2))
+    Xarid(message, message.text.split()[1], message.text.split()[2])
 
 
 def parse_uzex(message):

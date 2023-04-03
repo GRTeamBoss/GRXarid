@@ -30,14 +30,14 @@ class XaridUzex:
         'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36',
     }
 
-    def __init__(self, message: Message, start: int, end: int):
+    def __init__(self, message: Message, start: str, end: str):
         self.message = message
         self.start = int(start)
         self.end = int(end)
         self.logger = log
         self.__parse()
-        data = pathlib.Path(f"./Files/{message.chat.id}_uzex_{message.date}.xlsx").read_bytes()
-        bot.send_document(self.message.chat.id, document=data, visible_file_name=f"xt_uzex_{self.start}_{self.start+self.end}.xlsx", caption="@gr_team_xarid_bot")
+        data = pathlib.Path(f"./Files/{self.message.chat.id}_uzex_{self.message.date}.xlsx").read_bytes()
+        bot.send_document(self.message.chat.id, data, caption="@gr_team_xarid_bot")
 
 
     def __parse(self):
@@ -48,8 +48,8 @@ class XaridUzex:
             resp = requests.get(f"https://xarid-api-shop.uzex.uz/Common/GetLot/{num}", headers=self.__HEADER)
             if resp.status_code == 200:
                 values = resp.json()
-                parse_bot = str(self.__parse_values(values, method='bot'))
-                parse_excel = self.__parse_values(values, method='excel')
+                parse_bot = str(self.__parse_values(values, num, method='bot'))
+                parse_excel = self.__parse_values(values, num, method='excel')
                 bot.send_message(self.message.chat.id, parse_bot)
                 self.__write_to_excel(parse_excel, excel_row)
                 excel_row += 1
@@ -58,13 +58,13 @@ class XaridUzex:
         file = f"./Files/{self.message.chat.id}_uzex_{self.message.date}.xlsx"
         if pathlib.Path(file).exists():
             data = pathlib.Path(file).read_bytes()
-            bot.send_document(chat_id=self.message.chat.id, document=data, visible_file_name=f"uzex_{self.start}_{int(self.start)+int(self.end)}.xlsx", caption="@gr_team_xarid_bot")
+            bot.send_document(chat_id=self.message.chat.id, document=data, caption="@gr_team_xarid_bot")
         else:
             bot.send_message(self.message.chat.id, f"[#] All positions didn't parsed!")
 
 
 
-    def __parse_values(self, data, method: str):
+    def __parse_values(self, data, lot, method: str):
         if method == "bot":
             value = ""
             value += f"[*] Категория: {data['category_name']}\n"
@@ -83,7 +83,7 @@ class XaridUzex:
             value += f"[*] Код продукта: {data['product_code']}\n"
             value += f"[*] Дата производства: {data['start_date']}\n"
             value += f"[*] Статус продукта: {data['status_name']}\n"
-            value += f"[*] Ссылка: https://xarid.uzex.uz/shop/lot-details/{data['lot_display_no'][-5:]}"
+            value += f"[*] Ссылка: https://xarid.uzex.uz/shop/lot-details/{lot}"
             return value
         elif method == "excel":
             value = []
@@ -112,7 +112,7 @@ class XaridUzex:
             value.append(data['shelf_life_name'])
             value.append(data['start_date'])
             value.append(data['status_name'])
-            value.append("https://xarid.uzex.uz/shop/lot-details/{data['lot_display_no'][-5:]}")
+            value.append("https://xarid.uzex.uz/shop/lot-details/{lot}")
             return value
 
 
