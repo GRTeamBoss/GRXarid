@@ -8,7 +8,7 @@ class Token:
 
     def __init__(self) -> None:
         self.__TOKEN = "5083456307:AAENuIpz_8N5RG3UqPdHtf6B37ANjIUJkUs"
-        self.__bot = TeleBot(self.__TOKEN, parse_mode='MARKDOWN')
+        self.__bot = TeleBot(self.__TOKEN)
 
 
     def parse_environment(self, key: str) -> str:
