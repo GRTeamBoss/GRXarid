@@ -37,13 +37,13 @@ class XaridUzex:
         self.logger = log
         self.__parse()
         data = pathlib.Path(f"./Files/{self.message.chat.id}_uzex_{self.message.date}.xlsx").read_bytes()
-        bot.send_document(self.message.chat.id, data, visible_file_name=f'{self.message.chat.id}_uzex_{self.start+(self.end-self.start)}.xlsx', caption="@gr_team_xarid_bot\n#document #XaridUzex")
+        bot.send_document(self.message.chat.id, data, visible_file_name=f'{self.message.chat.id}_uzex_{self.end}_{self.end+self.start}.xlsx', caption="@gr_team_xarid_bot\n#document #XaridUzex")
 
 
     def __parse(self):
         excel_row = 1
         self.__create_excel()
-        for num in range(int(self.start), int(self.end)+int(self.start)+1):
+        for num in range(self.start, self.end+self.start+1):
             time.sleep(1)
             resp = requests.get(f"https://xarid-api-shop.uzex.uz/Common/GetLot/{num}", headers=self.__HEADER)
             if resp.status_code == 200:
@@ -57,8 +57,7 @@ class XaridUzex:
                 self.logger.info(f"[ID = {num}] [status = {resp.status_code}]")
         file = f"./Files/{self.message.chat.id}_uzex_{self.message.date}.xlsx"
         if pathlib.Path(file).exists():
-            data = pathlib.Path(file).read_bytes()
-            bot.send_document(self.message.chat.id, data, visible_file_name=f'{self.message.chat.id}_uzex_{self.start+(self.end-self.start)}.xlsx', caption="@gr_team_xarid_bot\n#document #XaridUzex")
+            pass
         else:
             bot.send_message(self.message.chat.id, f"[#] All positions didn't parsed!")
 
